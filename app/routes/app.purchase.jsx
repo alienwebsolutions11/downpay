@@ -15,7 +15,7 @@ import { TitleBar } from "@shopify/app-bridge-react";
 import { useAppBridge } from "@shopify/app-bridge-react";
 // import { ResourcePicker } from "@shopify/app-bridge/actions";
 import { useState, useCallback, useMemo, useRef, useEffect } from "react";
-import { useNavigate } from "@remix-run/react";
+
 import { json } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import { authenticate } from "../shopify.server";
@@ -441,7 +441,7 @@ export default function NewPage() {
 
     // const isSaving = fetcher.state !== "idle";
 const navigation = useNavigation();
-const fetcher = useFetcher();
+
 
 // pehle: const isSaving = fetcher.state !== "idle";
 const isSaving = fetcher.state !== "idle" || navigation.state === "loading";
