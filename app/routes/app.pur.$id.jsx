@@ -792,7 +792,8 @@ const navigation = useNavigation();
 
 // const isSubmitting =
 //   navigation.state === "submitting" 
-console.log("fetcher.state:", fetcher.state, "navigation.state:", navigation.state);
+const isSubmitting =
+  navigation.state === "submitting" || fetcher.state === "submitting";
 
   const togglePopover = useCallback(
     () => setPopoverActive((active) => !active),
