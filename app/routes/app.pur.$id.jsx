@@ -1,7 +1,7 @@
 import {
   Box, Card, Layout, Link, Listbox, Page, Text, InlineStack,
   TextField, BlockStack, Button, RadioButton, Checkbox, Banner,
-  DatePicker, Popover, Combobox, Tag, Thumbnail, Badge, Divider, Modal
+  DatePicker, Popover, Combobox, Tag, Thumbnail, Badge, Divider, Modal, Spinner
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
 
@@ -790,22 +790,10 @@ const toggleDeleteModal = useCallback(
 );
 const navigation = useNavigation();
 
-const isSubmitting =
-  navigation.state === "submitting" 
+// const isSubmitting =
+//   navigation.state === "submitting" 
+console.log("fetcher.state:", fetcher.state, "navigation.state:", navigation.state);
 
-
-
-  // const ALL_TAGS = [
-  //   "Accessory",
-  //   "Archived",
-  //   "Premium",
-  //   "Snow",
-  //   "Snowboard",
-  //   "Sport",
-  //   "Winter",
-  //   "Bicycle",
-  //   "Black"
-  // ];
   const togglePopover = useCallback(
     () => setPopoverActive((active) => !active),
     []
@@ -1380,6 +1368,20 @@ if (selectedType === "Whole store") {
 
   return (
     <>
+{isSubmitting && (
+  <div
+    style={{
+      position: "fixed",
+      inset: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+    }}
+  >
+    <Spinner accessibilityLabel="Updating purchase option" size="large" />
+  </div>
+)}
 <div
   style={{
     filter: isSubmitting ? "blur(4px)" : "none",

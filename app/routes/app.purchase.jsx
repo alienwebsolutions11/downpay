@@ -1400,7 +1400,6 @@ const isSaving = fetcher.state !== "idle" || navigation.state === "loading";
                         <Button submit >Save Purchase Option</Button>
                     </Layout.Section> */}
                     </Layout>
-                </fetcher.Form>
                 {fetcher.state === "idle" && fetcher.data?.success && (
                     <>
                         {/* {alert("Data submitted successfully!")}
@@ -1438,6 +1437,7 @@ const isSaving = fetcher.state !== "idle" || navigation.state === "loading";
                         </InlineStack>
                     </Box>
                 )}
+                </fetcher.Form>
 
                 <Outlet />
             </Page>
