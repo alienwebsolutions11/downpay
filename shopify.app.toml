@@ -2,7 +2,7 @@
 
 client_id = "3dad12ea6e0966d7fcefe4fedeadb38f"
 name = "Downpay"
-application_url = "https://component-creature-recycling-coalition.trycloudflare.com"
+application_url = "https://downpay.onrender.com"
 embedded = true
 
 [build]
@@ -27,5 +27,5 @@ use_legacy_install_flow = false
 
 [auth]
 redirect_urls = [
-  "https://component-creature-recycling-coalition.trycloudflare.com/api/auth/callback"
+  "https://downpay.onrender.com/api/auth/callback"
 ]
