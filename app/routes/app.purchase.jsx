@@ -10,7 +10,7 @@ import {
     Loading, Spinner
 } from "@shopify/polaris";
 
-
+import { useNavigate, useNavigation } from "@remix-run/react";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useAppBridge } from "@shopify/app-bridge-react";
 // import { ResourcePicker } from "@shopify/app-bridge/actions";
@@ -439,8 +439,12 @@ export default function NewPage() {
 
 
 
-    const isSaving = fetcher.state !== "idle";
+    // const isSaving = fetcher.state !== "idle";
+const navigation = useNavigation();
+const fetcher = useFetcher();
 
+// pehle: const isSaving = fetcher.state !== "idle";
+const isSaving = fetcher.state !== "idle" || navigation.state === "loading";
 
     // Track if any changes were made to the form
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -951,13 +955,13 @@ export default function NewPage() {
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
-    useEffect(() => {
-        if (fetcher.state === "idle" && fetcher.data?.success) {
-            console.time("NAVIGATE_TIME");
-            setHasUnsavedChanges(false);
-            navigate("/app?toast=data-saved");
-        }
-    }, [fetcher.state, fetcher.data, navigate]);
+    // useEffect(() => {
+    //     if (fetcher.state === "idle" && fetcher.data?.success) {
+    //         console.time("NAVIGATE_TIME");
+    //         setHasUnsavedChanges(false);
+    //         navigate("/app?toast=data-saved");
+    //     }
+    // }, [fetcher.state, fetcher.data, navigate]);
 
 
 
