@@ -1,0 +1,133 @@
+<style>
+  .options_purchase_radio_btn {
+    display: block;
+    margin-bottom: 6px;
+    cursor: pointer;
+  }
+</style>
+
+{% assign first_group = product.selling_plan_groups.first %}
+
+{% if first_group %}
+
+<fieldset class="selling-plan-fieldset">
+  <legend>Choose payment option</legend>
+
+  <label class="options_purchase_radio_btn">
+    <input type="radio"
+      onchange="checkSelling(this);"
+      name="selling_plan_option"
+      value="{{ first_group.selling_plans.first.id }}"
+      data-selling-plan>
+
+    Deposit (<span class="deposit-value">Loading...</span>)
+  </label>
+
+  <label class="options_purchase_radio_btn">
+    <input type="radio"
+      onchange="checkSelling(this);"
+      name="selling_plan_option"
+      value=""
+      data-selling-plan
+      checked>
+
+    Pay full
+  </label>
+
+</fieldset>
+
+{% endif %}
+
+<script>
+(function () {
+
+  function getForm() {
+    return document.querySelector('form[action="/cart/add"]');
+  }
+
+  function updateSellingPlan(value) {
+    const form = getForm();
+    if (!form) return;
+
+    const existing = form.querySelector('input[name="selling_plan"]');
+    if (existing) existing.remove();
+
+    if (value) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'selling_plan';
+      input.value = value;
+
+      form.appendChild(input);
+    }
+  }
+
+  document.addEventListener('change', function (e) {
+    if (!e.target.matches('[data-selling-plan]')) return;
+    updateSellingPlan(e.target.value);
+  });
+
+  function initDefault() {
+    const checked = document.querySelector('[data-selling-plan]:checked');
+    if (checked) updateSellingPlan(checked.value);
+  }
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  const groups = {{ product.selling_plan_groups | json }};
+  const plan = groups?.[0]?.selling_plans?.[0];
+
+  let depositText = "0";
+
+  const charge = plan?.checkout_charge;
+
+  if (charge?.value != null) {
+
+    // convert cents → dollars
+    const value = charge.value_type === "percentage"
+      ? charge.value
+      : (charge.value / 100);
+
+    if (charge.value_type === "percentage") {
+      depositText = value + "%";
+    } 
+    else {
+      depositText = "$" + value.toFixed(2);
+    }
+  }
+
+  const el = document.querySelector('.deposit-value');
+  if (el) el.textContent = depositText;
+});
+  const originalFetch = window.fetch;
+
+  window.fetch = function (url, options) {
+
+    if (url.includes('/cart/add') && options?.body instanceof FormData) {
+
+      const hidden = document.querySelector('input[name="selling_plan"]');
+
+      if (hidden?.value) {
+        options.body.set('selling_plan', hidden.value);
+      }
+    }
+
+    return originalFetch.apply(this, arguments);
+  };
+
+  document.addEventListener('DOMContentLoaded', initDefault);
+  document.addEventListener('shopify:section:load', initDefault);
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Deposit Option",
+  "target": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}
