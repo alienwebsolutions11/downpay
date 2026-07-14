@@ -309,19 +309,27 @@ export async function isThemeBlockActive({ shop, accessToken }) {
 
     for (const section of Object.values(sections)) {
       const blocks = section.blocks || {};
+// for (const block of Object.values(blocks)) {
+// if (
+//   typeof block.type === "string" &&
+//   block.type.includes("/blocks/")
+// ) {
+//   console.log("✅ REAL APP BLOCK FOUND:", block.type);
+//   return true;
+// } {
+//     console.log("✅ REAL APP BLOCK FOUND:", block.type);
+//     return true;
+//   }
+// }
 for (const block of Object.values(blocks)) {
-if (
-  typeof block.type === "string" &&
-  block.type.includes("/blocks/")
-) {
-  console.log("✅ REAL APP BLOCK FOUND:", block.type);
-  return true;
-} {
+  if (
+    typeof block.type === "string" &&
+    block.type.includes("/blocks/")
+  ) {
     console.log("✅ REAL APP BLOCK FOUND:", block.type);
     return true;
   }
 }
-
     }
   }
   return false;
