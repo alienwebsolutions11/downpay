@@ -322,6 +322,7 @@ export async function isThemeBlockActive({ shop, accessToken }) {
 //   }
 // }
 for (const block of Object.values(blocks)) {
+   console.log("BLOCK TYPE FOUND:", block.type);
   if (
     typeof block.type === "string" &&
     block.type.includes("/blocks/")
