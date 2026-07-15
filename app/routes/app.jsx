@@ -32,6 +32,7 @@ console.log("mytoken", sessionData);
         <Link to="/app/analytics">Analytics</Link>
           <Link to="/app/settings">Settings</Link>
             <Link to="/app/integrations">Integrations</Link>
+            <Link to="/app/test-block-status">Test Block Status</Link>
       </NavMenu>
       <Outlet />
     </AppProvider>
