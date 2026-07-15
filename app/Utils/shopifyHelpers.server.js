@@ -321,13 +321,16 @@ export async function isThemeBlockActive({ shop, accessToken }) {
 //     return true;
 //   }
 // }
+const MY_APP_HANDLE = "downpay"; // exact confirm karo apne block add karke
+
 for (const block of Object.values(blocks)) {
-   console.log("BLOCK TYPE FOUND:", block.type);
+  console.log("BLOCK TYPE FOUND:", block.type);
+
   if (
     typeof block.type === "string" &&
-    block.type.includes("/blocks/")
+    block.type.includes(`shopify://apps/${MY_APP_HANDLE}/blocks/`)
   ) {
-    console.log("✅ REAL APP BLOCK FOUND:", block.type);
+    console.log("✅ MY APP BLOCK FOUND:", block.type);
     return true;
   }
 }
